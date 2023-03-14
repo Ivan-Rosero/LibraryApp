@@ -19,7 +19,7 @@ import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 @Setter
 public class BookDTO {
 
-    @NotNull
+    //@NotNull
     private Integer idBook;
     @NotNull
     @NotEmpty(message = "Escriba nombre del libro")

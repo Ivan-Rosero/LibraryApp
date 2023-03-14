@@ -18,7 +18,7 @@ import org.ivanmros.pruebaFinal.domain.model.user.UserName;
 @Setter
 public class UserDTO {
 
-    @NotNull
+    //@NotNull
     private Integer userId;
     @NotNull
     @NotEmpty(message = "Escriba su nombre")

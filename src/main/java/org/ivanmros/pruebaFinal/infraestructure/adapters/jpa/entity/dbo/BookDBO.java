@@ -18,11 +18,13 @@ public class BookDBO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BOOK_ID")
+    @Column(name = "ID_BOOK")
     private Integer idBook;
+
     @Column(name = "BOOK_NAME")
     private String bookName;
     @Column(name = "BOOK_STATUS")
+
     private Boolean bookStatus;
 
     public static Book toDomain(BookDBO bookDBO){
