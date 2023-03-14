@@ -2,16 +2,16 @@ package org.ivanmros.pruebaFinal.domain.model.user;
 
 public class User {
 
-    private final UserId idUser;
+    private final UserId userId;
     private final UserName userName;
 
-    public User(UserId idUser, UserName userName) {
-        this.idUser = idUser;
+    public User(UserId userId, UserName userName) {
+        this.userId = userId;
         this.userName = userName;
     }
 
     public UserId getIdUser() {
-        return idUser;
+        return userId;
     }
 
     public UserName getUserName() {

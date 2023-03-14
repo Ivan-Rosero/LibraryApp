@@ -17,14 +17,14 @@ public class UserDBO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
-    private Integer idUser;
+    @Column(name = "ID_USER")
+    private Integer userId;
     @Column(name = "USER_NAME")
     private String userName;
 
     public static User toDomain(UserDBO userDBO){
         return new User(
-                new UserId(userDBO.getIdUser()),
+                new UserId(userDBO.getUserId()),
                 new UserName(userDBO.getUserName())
         );
     }

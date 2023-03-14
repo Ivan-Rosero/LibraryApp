@@ -25,8 +25,8 @@ public class BookUseCase {
         return (ArrayList<BookDTO>) bookList.stream().map(BookDTO::fromDomain).collect(Collectors.toList());
     }
 
-    public BookDTO findBookById(Integer bookId){
-        Book book = this.iBookRepository.findBookById(bookId);
+    public BookDTO findBookById(Integer idBook){
+        Book book = this.iBookRepository.findBookById(idBook);
 
         return BookDTO.fromDomain(book);
     }

@@ -11,14 +11,13 @@ import org.ivanmros.pruebaFinal.domain.model.user.User;
 import org.ivanmros.pruebaFinal.domain.model.user.UserId;
 import org.ivanmros.pruebaFinal.domain.model.user.UserName;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class UserDTO {
 
-    //@NotNull
+    @NotNull
     private Integer userId;
     @NotNull
     @NotEmpty(message = "Escriba su nombre")

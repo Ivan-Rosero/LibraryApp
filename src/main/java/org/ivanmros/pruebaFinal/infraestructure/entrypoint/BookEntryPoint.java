@@ -43,7 +43,7 @@ public class BookEntryPoint {
         }
     }
 
-    @GetMapping("/books/{idBook}")
+    @GetMapping("/{idBook}")
     public ResponseEntity<?> getById(@PathVariable(name = "idBook") Integer idBook){
         try{
             idBook.equals(idBook);

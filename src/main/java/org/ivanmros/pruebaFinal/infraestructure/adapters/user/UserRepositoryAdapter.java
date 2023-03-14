@@ -46,7 +46,7 @@ public class UserRepositoryAdapter implements IUserRepository{
     @Override
     public User updateUser(User user) {
         UserDBO userDBO = UserDBO.fromDomain(user);
-        Optional<UserDBO> userFound = iUserRepositoryAdapter.findById(userDBO.getIdUser());
+        Optional<UserDBO> userFound = iUserRepositoryAdapter.findById(userDBO.getUserId());
         if(userFound.isEmpty()){
             throw new NullPointerException("No existe usuario con ese id: " + user.getIdUser().getValue());
         }else {

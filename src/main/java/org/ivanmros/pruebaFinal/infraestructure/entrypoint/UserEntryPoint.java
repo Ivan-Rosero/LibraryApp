@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT})
 public class UserEntryPoint {
@@ -43,11 +43,11 @@ public class UserEntryPoint {
         }
     }
 
-    @GetMapping("/users/{idUser}")
-    public ResponseEntity<?> getById(@PathVariable(name = "idUser") Integer idUser){
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getById(@PathVariable(name = "userId") Integer userId){
         try{
-            idUser.equals(idUser);
-            return new ResponseEntity(userUseCase.findUserById(idUser), HttpStatus.OK);
+            userId.equals(userId);
+            return new ResponseEntity(userUseCase.findUserById(userId), HttpStatus.OK);
         }catch(NullPointerException ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
