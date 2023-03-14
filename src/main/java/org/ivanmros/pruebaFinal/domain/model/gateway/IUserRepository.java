@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IUserRepository {
 
-    public User saveUser(User user);
-    public List<User> findAllUsers();
+    User saveUser(User user);
+    List<User> findAllUsers();
 
-    public User findUserById(Integer id);
-    public User updateUser(User user);
+    User findUserById(Integer id);
+    User updateUser(User user);
 }

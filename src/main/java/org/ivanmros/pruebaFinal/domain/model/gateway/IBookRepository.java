@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface IBookRepository {
 
-    public Book saveBook(Book book);
-    public List<Book> findAllBooks();
+    Book saveBook(Book book);
+    List<Book> findAllBooks();
 
-    public Book findBookById(Integer id);
-    public Book updateBook(Book book);
+    Book findBookById(Integer id);
+    Book updateBook(Book book);
 
 }
