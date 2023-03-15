@@ -1,8 +1,10 @@
 package org.ivanmros.pruebaFinal.configuration;
 
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBookRepository;
+import org.ivanmros.pruebaFinal.domain.model.gateway.IBorrowRepository;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IUserRepository;
 import org.ivanmros.pruebaFinal.domain.usecase.BookUseCase;
+import org.ivanmros.pruebaFinal.domain.usecase.BorrowUseCase;
 import org.ivanmros.pruebaFinal.domain.usecase.UserUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,5 +20,10 @@ public class UseCaseBeanConfig {
     @Bean("userService")
     public UserUseCase userUseCase (IUserRepository iUserRepository){
         return new UserUseCase(iUserRepository);
+    }
+
+    @Bean("borrowService")
+    public BorrowUseCase borrowUseCase (IBookRepository iBookRepository, IUserRepository iUserRepository, IBorrowRepository iBorrowRepository){
+        return new BorrowUseCase(iBookRepository, iUserRepository, iBorrowRepository);
     }
 }
