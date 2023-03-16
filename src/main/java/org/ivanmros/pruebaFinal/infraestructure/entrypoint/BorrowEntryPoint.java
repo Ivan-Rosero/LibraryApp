@@ -3,6 +3,7 @@ package org.ivanmros.pruebaFinal.infraestructure.entrypoint;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.borrow.dto.BorrowOutDTO;
+import org.ivanmros.pruebaFinal.domain.model.borrow.dto.BorrowUpdateDTO;
 import org.ivanmros.pruebaFinal.domain.usecase.BorrowUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,12 @@ public class BorrowEntryPoint {
         }catch (IllegalArgumentException ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<BorrowOutDTO> updateBorrow(@Valid @RequestBody BorrowUpdateDTO borrowUpdateDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new BorrowOutDTO().fromDomain(borrowUseCase.updateBorrow(
+                borrowUpdateDTO.getBorrowId()
+        )));
     }
 }

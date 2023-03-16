@@ -16,4 +16,20 @@ public class Functions {
         LocalDate endDate = startDate.plusDays(7);
         return endDate;
     }
+
+    public static LocalDate defaultDateFunction(){
+        LocalDate returnDate = LocalDate.now();
+        return returnDate;
+    }
+
+    public static Boolean penaltyFee(LocalDate endDate, LocalDate returnDate){
+        Boolean fee;
+        if(returnDate.isBefore(endDate)){
+            fee = false;
+            return fee;
+        }else{
+            fee = true;
+            return fee;
+        }
+    }
 }

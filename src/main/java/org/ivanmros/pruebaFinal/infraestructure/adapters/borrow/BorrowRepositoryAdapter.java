@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -17,8 +18,9 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
 
     @Override
     public BorrowOut createBorrow(BorrowOut borrowOut) {
-        BorrowDBO borrowCreated = iBorrowRepositoryAdapter.save(BorrowDBO.fromDomain(borrowOut));
-        return BorrowDBO.toDomain(borrowCreated);
+        return iBorrowRepositoryAdapter.save(new BorrowDBO().fromDomain(borrowOut)).toDomain();
+//        BorrowDBO borrowCreated = iBorrowRepositoryAdapter.save(BorrowDBO().fromDomain(borrowOut));
+//        return BorrowDBO.toDomain(borrowCreated);
     }
 
     @Override
@@ -37,5 +39,25 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
             throw new IllegalArgumentException("No hay registros de prestamos.");
         }
         return iBorrowRepositoryAdapter.findAll().stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
+    }
+
+
+    //Editar desde aquí
+
+    @Override
+    public BorrowOut updateBorrow(BorrowOut borrowOut) {
+        return iBorrowRepositoryAdapter.save(new BorrowDBO().fromDomain(borrowOut)).toDomain();
+    }
+
+    @Override
+    public BorrowOut findByBookId(Integer bookId) {
+        Optional<BorrowDBO> obj = Optional.ofNullable(iBorrowRepositoryAdapter.findBorrowByBookId(bookId));
+        return obj.map(BorrowDBO::toDomain).orElse(null);
+    }
+
+    @Override
+    public BorrowOut findById(Integer borrowId) {
+        Optional<BorrowDBO> obj = iBorrowRepositoryAdapter.findById(borrowId);
+        return obj.map(BorrowDBO::toDomain).orElse(null);
     }
 }

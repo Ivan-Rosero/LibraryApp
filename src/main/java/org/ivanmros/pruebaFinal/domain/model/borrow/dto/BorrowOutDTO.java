@@ -40,7 +40,11 @@ public class BorrowOutDTO {
     private String startDate;
     private String endDate;
 
+    private String returnDate;
+
     private Boolean borrowStatus;
+
+    private Boolean penaltyFeeBoolean;
 
     public static BorrowOutDTO fromDomain(BorrowOut borrowOut){
         return new BorrowOutDTO(borrowOut.getBorrowId().getValue(),
@@ -51,7 +55,9 @@ public class BorrowOutDTO {
                 borrowOut.getBookStatus().getValue(),
                 borrowOut.getStartDate().getValue().format(Constants.FORMATTER),
                 borrowOut.getEndDate().getValue().format(Constants.FORMATTER),
-                borrowOut.getBorrowStatus().getValue()
+                borrowOut.getReturnDate().getValue().format(Constants.FORMATTER),
+                borrowOut.getBorrowStatus().getValue(),
+                borrowOut.getPenaltyFeeBoolean().getValue()
         );
     }
 }

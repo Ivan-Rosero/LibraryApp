@@ -11,4 +11,10 @@ public interface IBorrowRepository {
     List<BorrowOut> findByUserId(Integer userId);
 
     List<BorrowOut> findAllBorrows();
+
+    BorrowOut updateBorrow(BorrowOut borrowOut);
+
+    BorrowOut findByBookId(Integer bookId);
+
+    BorrowOut findById(Integer borrowId);
 }

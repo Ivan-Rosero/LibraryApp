@@ -24,11 +24,14 @@ public class BorrowOut {
     private final StartDate startDate;
     private final EndDate endDate;
 
+    private ReturnDate returnDate;
     private BorrowStatus borrowStatus;
 
-    public BorrowOut(BorrowId borrowId, UserId userId, UserName userName,
-                     BookId bookId, BookName bookName, BookStatus bookStatus,
-                     StartDate startDate, EndDate endDate, BorrowStatus borrowStatus) {
+    private PenaltyFeeBoolean penaltyFeeBoolean;
+
+    public BorrowOut(BorrowId borrowId, UserId userId, UserName userName, BookId bookId, BookName bookName,
+                     BookStatus bookStatus, StartDate startDate, EndDate endDate, ReturnDate returnDate,
+                     BorrowStatus borrowStatus, PenaltyFeeBoolean penaltyFeeBoolean) {
         this.borrowId = borrowId;
         this.userId = userId;
         this.userName = userName;
@@ -37,7 +40,9 @@ public class BorrowOut {
         this.bookStatus = bookStatus;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.returnDate = returnDate;
         this.borrowStatus = borrowStatus;
+        this.penaltyFeeBoolean = penaltyFeeBoolean;
     }
 
     public BorrowId getBorrowId() {
@@ -76,11 +81,27 @@ public class BorrowOut {
         return endDate;
     }
 
+    public ReturnDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(ReturnDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
     public BorrowStatus getBorrowStatus() {
         return borrowStatus;
     }
 
     public void setBorrowStatus(BorrowStatus borrowStatus) {
         this.borrowStatus = borrowStatus;
+    }
+
+    public PenaltyFeeBoolean getPenaltyFeeBoolean() {
+        return penaltyFeeBoolean;
+    }
+
+    public void setPenaltyFeeBoolean(PenaltyFeeBoolean penaltyFeeBoolean) {
+        this.penaltyFeeBoolean = penaltyFeeBoolean;
     }
 }
