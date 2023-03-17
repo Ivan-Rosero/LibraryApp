@@ -6,8 +6,12 @@ import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 import org.ivanmros.pruebaFinal.domain.model.borrow.dto.BorrowOutDTO;
 import org.ivanmros.pruebaFinal.domain.model.borrow.in.StartDate;
 import org.ivanmros.pruebaFinal.domain.model.borrow.out.*;
+import org.ivanmros.pruebaFinal.domain.model.fee.Fee;
+import org.ivanmros.pruebaFinal.domain.model.fee.FeeAmount;
+import org.ivanmros.pruebaFinal.domain.model.fee.FeeId;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBookRepository;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBorrowRepository;
+import org.ivanmros.pruebaFinal.domain.model.gateway.IFeeRepository;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IUserRepository;
 import org.ivanmros.pruebaFinal.domain.model.user.User;
 import org.ivanmros.pruebaFinal.domain.usecase.utils.Constants;
@@ -24,12 +28,13 @@ public class BorrowUseCase {
     private final IBookRepository iBookRepository;
     private final IUserRepository iUserRepository;
     private final IBorrowRepository iBorrowRepository;
+    private final IFeeRepository iFeeRepository;
 
-    public BorrowUseCase(IBookRepository iBookRepository, IUserRepository iUserRepository,
-                         IBorrowRepository iBorrowRepository) {
+    public BorrowUseCase(IBookRepository iBookRepository, IUserRepository iUserRepository, IBorrowRepository iBorrowRepository, IFeeRepository iFeeRepository) {
         this.iBookRepository = iBookRepository;
         this.iUserRepository = iUserRepository;
         this.iBorrowRepository = iBorrowRepository;
+        this.iFeeRepository = iFeeRepository;
     }
 
     public BorrowOutDTO createBorrow(BorrowOutDTO borrowOutDTO){
@@ -70,20 +75,42 @@ public class BorrowUseCase {
         }
     }
 
-    public ArrayList<BorrowOutDTO> findByUserId(Integer userId){
-        List<BorrowOut> borrowedBooksByUser = this.iBorrowRepository.findByUserId(userId);
-        return (ArrayList<BorrowOutDTO>) borrowedBooksByUser.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
-    }
-
-    public ArrayList<BorrowOutDTO> findAllBorrows(){
-        List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
-        return (ArrayList<BorrowOutDTO>) totalBorrowedBooksList.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
-    }
-
-    public BorrowOutDTO findByBookId(Integer bookId){
-        BorrowOut borrowOut = this.iBorrowRepository.findByBookId(bookId);
-        return BorrowOutDTO.fromDomain(borrowOut);
-    }
+//    public BorrowOut updateBorrow(Integer borrowId){
+//        Optional<BorrowOut> borrow = Optional.ofNullable(iBorrowRepository.findById(borrowId));
+//        Book book = iBookRepository.findBookById(borrow.get().getBookId().getValue());
+//
+//        Boolean borrowedBook = book.getBookStatus().getValue();
+//        LocalDate today = Functions.defaultDateFunction();
+//        Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
+//
+//        if(borrow.isPresent()){
+//            if(borrowedBook == true) {
+//                throw new IllegalArgumentException("No se puede actualizar este prestamo.");
+//            }
+//            Book book1 = new Book(
+//                    book.getIdBook(),
+//                    book.getBookName(),
+//                    new BookStatus(true)
+//            );
+//
+//            iBookRepository.updateBook(book1);
+//            return iBorrowRepository.updateBorrow(new BorrowOut(
+//                    borrow.get().getBorrowId(),
+//                    borrow.get().getUserId(),
+//                    borrow.get().getUserName(),
+//                    borrow.get().getBookId(),
+//                    borrow.get().getBookName(),
+//                    book1.getBookStatus(),
+//                    borrow.get().getStartDate(),
+//                    borrow.get().getEndDate(),
+//                    new ReturnDate(today),
+//                    new BorrowStatus(false),
+//                    new PenaltyFeeBoolean(penaltyFee)
+//            ));
+//
+//        }
+//        throw new EntityExistsException("El prestamo del libro: " + book.getBookName().getValue() + " este libro no se ha realizado. Aún está en biblioteca");
+//    }
 
     public BorrowOut updateBorrow(Integer borrowId){
         Optional<BorrowOut> borrow = Optional.ofNullable(iBorrowRepository.findById(borrowId));
@@ -92,16 +119,32 @@ public class BorrowUseCase {
         Boolean borrowedBook = book.getBookStatus().getValue();
         LocalDate today = Functions.defaultDateFunction();
         Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
+        Double doubleFee = 10000.0;
 
         if(borrow.isPresent()){
             if(borrowedBook == true) {
                 throw new IllegalArgumentException("No se puede actualizar este prestamo.");
             }
-                Book book1 = new Book(
+            Book book1 = new Book(
                     book.getIdBook(),
                     book.getBookName(),
                     new BookStatus(true)
+            );
+
+            iBookRepository.updateBook(book1);
+
+            if(penaltyFee == true){
+                Fee fee = new Fee(
+                        new FeeId(null),
+                        borrow.get().getUserId(),
+                        borrow.get().getUserName(),
+                        borrow.get().getBorrowId(),
+                        borrow.get().getStartDate(),
+                        borrow.get().getEndDate(),
+                        new FeeAmount(doubleFee)
                 );
+                iFeeRepository.createFee(fee);
+            }
 
             return iBorrowRepository.updateBorrow(new BorrowOut(
                     borrow.get().getBorrowId(),
@@ -117,46 +160,24 @@ public class BorrowUseCase {
                     new PenaltyFeeBoolean(penaltyFee)
             ));
 
-            }
-        throw new EntityExistsException("El prestamo de este libro no se ha realizado");
+        }
+        throw new EntityExistsException("El prestamo del libro: " + book.getBookName().getValue() + " este libro no se ha realizado. Aún está en biblioteca");
+    }
+
+    public ArrayList<BorrowOutDTO> findByUserId(Integer userId){
+        List<BorrowOut> borrowedBooksByUser = this.iBorrowRepository.findByUserId(userId);
+        return (ArrayList<BorrowOutDTO>) borrowedBooksByUser.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
+    }
+
+    public ArrayList<BorrowOutDTO> findAllBorrows(){
+        List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
+        return (ArrayList<BorrowOutDTO>) totalBorrowedBooksList.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
+    }
+
+    public BorrowOutDTO findByBookId(Integer bookId){
+        BorrowOut borrowOut = this.iBorrowRepository.findByBookId(bookId);
+        return BorrowOutDTO.fromDomain(borrowOut);
     }
 
 
-
-//    public BorrowOutDTO updateBorrow(BorrowOutDTO borrowOutDTO, Integer bookId){
-//        Book book = iBookRepository.findBookById(borrowOutDTO.getBookId());
-//        BorrowOut borrowOut = iBorrowRepository.findByBookId(borrowOutDTO.getBookId());
-//
-//        Boolean borrowedBook = book.getBookStatus().getValue();
-//
-//        LocalDate today = Functions.defaultDateFunction();
-//        Boolean penaltyFee = Functions.penaltyFee(borrowOut.getEndDate().getValue(), today);
-//
-//        if(borrowedBook == true){
-//            Book book1 = new Book(
-//                    book.getIdBook(),
-//                    book.getBookName(),
-//                    new BookStatus(true)
-//            );
-//
-//            BorrowOut borrowOut1 = new BorrowOut(
-//                    borrowOut.getBorrowId(),
-//                    borrowOut.getUserId(),
-//                    borrowOut.getUserName(),
-//                    borrowOut.getBookId(),
-//                    borrowOut.getBookName(),
-//                    book1.getBookStatus(),
-//                    borrowOut.getStartDate(),
-//                    borrowOut.getEndDate(),
-//                    new ReturnDate(today),
-//                    new BorrowStatus(false),
-//                    new PenaltyFeeBoolean(penaltyFee)
-//            );
-//            iBookRepository.updateBook(book1);
-//            return BorrowOutDTO.fromDomain(this.iBorrowRepository.updateBorrow(borrowOut1));
-//
-//        }else{
-//            throw new IllegalArgumentException("No se puede actualizar el prestamo.");
-//        }
-//    }
 }

@@ -2,9 +2,11 @@ package org.ivanmros.pruebaFinal.configuration;
 
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBookRepository;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBorrowRepository;
+import org.ivanmros.pruebaFinal.domain.model.gateway.IFeeRepository;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IUserRepository;
 import org.ivanmros.pruebaFinal.domain.usecase.BookUseCase;
 import org.ivanmros.pruebaFinal.domain.usecase.BorrowUseCase;
+import org.ivanmros.pruebaFinal.domain.usecase.FeeUseCase;
 import org.ivanmros.pruebaFinal.domain.usecase.UserUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +25,12 @@ public class UseCaseBeanConfig {
     }
 
     @Bean("borrowService")
-    public BorrowUseCase borrowUseCase (IBookRepository iBookRepository, IUserRepository iUserRepository, IBorrowRepository iBorrowRepository){
-        return new BorrowUseCase(iBookRepository, iUserRepository, iBorrowRepository);
+    public BorrowUseCase borrowUseCase (IBookRepository iBookRepository, IUserRepository iUserRepository, IBorrowRepository iBorrowRepository, IFeeRepository iFeeRepository){
+        return new BorrowUseCase(iBookRepository, iUserRepository, iBorrowRepository, iFeeRepository);
+    }
+
+    @Bean("feeService")
+    public FeeUseCase feeUseCase (IBorrowRepository iBorrowRepository, IFeeRepository iFeeRepository){
+        return new FeeUseCase(iBorrowRepository, iFeeRepository);
     }
 }

@@ -19,8 +19,6 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
     @Override
     public BorrowOut createBorrow(BorrowOut borrowOut) {
         return iBorrowRepositoryAdapter.save(new BorrowDBO().fromDomain(borrowOut)).toDomain();
-//        BorrowDBO borrowCreated = iBorrowRepositoryAdapter.save(BorrowDBO().fromDomain(borrowOut));
-//        return BorrowDBO.toDomain(borrowCreated);
     }
 
     @Override
