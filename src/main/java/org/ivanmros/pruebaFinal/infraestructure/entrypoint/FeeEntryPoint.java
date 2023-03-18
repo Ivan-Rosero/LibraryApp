@@ -36,14 +36,5 @@ public class FeeEntryPoint {
         }catch (NullPointerException ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
-//        return ResponseEntity.status(HttpStatus.FOUND).body(
-//                feeUseCase.findFeeByUserId(userId)
-//                        .stream()
-//                        .map(totalFees -> new FeeDTO())
-//                        .toList()
-//        );
     }
-
-
-
 }

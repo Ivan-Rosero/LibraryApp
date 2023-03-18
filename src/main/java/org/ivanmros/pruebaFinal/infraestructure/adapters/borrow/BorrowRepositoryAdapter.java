@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.borrow.out.BorrowOut;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBorrowRepository;
 import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.BorrowDBO;
+import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.FeeDBO;
+import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.UserDBO;
+import org.ivanmros.pruebaFinal.infraestructure.adapters.user.IUserRepositoryAdapter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.Optional;
 public class BorrowRepositoryAdapter implements IBorrowRepository {
 
     private final IBorrowRepositoryAdapter iBorrowRepositoryAdapter;
+    private final IUserRepositoryAdapter iUserRepositoryAdapter;
 
     @Override
     public BorrowOut createBorrow(BorrowOut borrowOut) {
@@ -24,10 +28,21 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
     @Override
     public List<BorrowOut> findByUserId(String userId) {
         List<BorrowDBO> borrowedByUserList = iBorrowRepositoryAdapter.findByUserId(userId);
-        if(borrowedByUserList.isEmpty()){
-            throw new NullPointerException("El usuario con id " + userId + " no ha solicitado prestamos aún.");
+        Optional<UserDBO> userFound = iUserRepositoryAdapter.findById(userId);
+
+        if(userFound.isEmpty()){
+            throw new NullPointerException("No existe el usuario con el id: " + userId);
+        }else{
+            if(borrowedByUserList.isEmpty()){
+                throw new NullPointerException("El usuario con id: " + userId + " no ha solicitado prestamos aún.");
+            }
+            return borrowedByUserList.stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
         }
-        return borrowedByUserList.stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
+
+//        if(borrowedByUserList.isEmpty()){
+//            throw new NullPointerException("El usuario con id " + userId + " no ha solicitado prestamos aún.");
+//        }
+//        return borrowedByUserList.stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
     }
 
     @Override
@@ -44,8 +59,12 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
 
     @Override
     public BorrowOut updateBorrow(BorrowOut borrowOut) {
-
-        return iBorrowRepositoryAdapter.save(new BorrowDBO().fromDomain(borrowOut)).toDomain();
+        Optional<BorrowDBO> borrowIdFound = iBorrowRepositoryAdapter.findById(borrowOut.getBorrowId().getValue());
+        if(!borrowIdFound.isPresent()){
+            throw new NullPointerException("No hay registros de prestamos con el id " + borrowIdFound);
+        }else{
+            return iBorrowRepositoryAdapter.save(new BorrowDBO().fromDomain(borrowOut)).toDomain();
+        }
     }
 
     @Override

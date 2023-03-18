@@ -1,6 +1,7 @@
 package org.ivanmros.pruebaFinal.infraestructure.entrypoint;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.borrow.dto.BorrowOutDTO;
 import org.ivanmros.pruebaFinal.domain.model.borrow.dto.BorrowUpdateDTO;
@@ -51,9 +52,13 @@ public class BorrowEntryPoint {
     }
 
     @PutMapping
-    public ResponseEntity<BorrowOutDTO> updateBorrow(@Valid @RequestBody BorrowUpdateDTO borrowUpdateDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(new BorrowOutDTO().fromDomain(borrowUseCase.updateBorrow(
+    public ResponseEntity<?> updateBorrow(@Valid @RequestBody BorrowUpdateDTO borrowUpdateDTO) throws Exception{
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new BorrowOutDTO().fromDomain(borrowUseCase.updateBorrow(
                 borrowUpdateDTO.getBorrowId()
-        )));
+                )));
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

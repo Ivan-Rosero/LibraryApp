@@ -93,7 +93,7 @@ public class BorrowUseCase {
 //
 //        if(borrow.isPresent()){
 //            if(borrowedBook == true) {
-//                throw new IllegalArgumentException("No se puede actualizar este prestamo.");
+//                throw new NullPointerException("El libro correspondiente a este prestamo ya fue devuelto.");
 //            }
 //            Book book1 = new Book(
 //                    book.getIdBook(),
@@ -102,6 +102,23 @@ public class BorrowUseCase {
 //            );
 //
 //            iBookRepository.updateBook(book1);
+//
+//            if(penaltyFee == true){
+//                LocalDate endDate = borrow.get().getEndDate().getValue();
+//                Double totalPenaltyFee = Functions.daysFee(endDate, today);
+//
+//                Fee fee = new Fee(
+//                        new FeeId(null),
+//                        borrow.get().getUserId(),
+//                        borrow.get().getUserName(),
+//                        borrow.get().getBorrowId(),
+//                        borrow.get().getStartDate(),
+//                        borrow.get().getEndDate(),
+//                        new FeeAmount(totalPenaltyFee)
+//                );
+//                iFeeRepository.createFee(fee);
+//            }
+//
 //            return iBorrowRepository.updateBorrow(new BorrowOut(
 //                    borrow.get().getBorrowId(),
 //                    borrow.get().getUserId(),
@@ -117,10 +134,10 @@ public class BorrowUseCase {
 //            ));
 //
 //        }
-//        throw new EntityExistsException("El prestamo del libro: " + book.getBookName().getValue() + " este libro no se ha realizado. Aún está en biblioteca");
+//            throw new NullPointerException("El prestamo del libro: " + book.getBookName().getValue() + " no se ha realizado. Aún está en biblioteca");
 //    }
 
-    public BorrowOut updateBorrow(Integer borrowId){
+    public BorrowOut updateBorrow(Integer borrowId) throws Exception {
         Optional<BorrowOut> borrow = Optional.ofNullable(iBorrowRepository.findById(borrowId));
         Book book = iBookRepository.findBookById(borrow.get().getBookId().getValue());
 
@@ -128,9 +145,11 @@ public class BorrowUseCase {
         LocalDate today = Functions.defaultDateFunction();
         Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
 
-        if(borrow.isPresent()){
+        if(!borrow.isPresent()) {
+            throw new Exception("El prestamo del libro: " + book.getBookName().getValue() + " no se ha realizado. Aún está en biblioteca");
+        }else{
             if(borrowedBook == true) {
-                throw new NullPointerException("El libro de este prestamo ya fue devuelto.");
+                throw new NullPointerException("El libro correspondiente a este prestamo ya fue devuelto.");
             }
             Book book1 = new Book(
                     book.getIdBook(),
@@ -171,7 +190,6 @@ public class BorrowUseCase {
             ));
 
         }
-        throw new EntityExistsException("El prestamo del libro: " + book.getBookName().getValue() + " este libro no se ha realizado. Aún está en biblioteca");
     }
 
     public ArrayList<BorrowOutDTO> findByUserId(String userId){
