@@ -24,7 +24,7 @@ public class BorrowDBO {
     @Column(name = "ID_BORROW")
     private Integer borrowId;
     @Column(name = "ID_USER")
-    private Integer userId;
+    private String userId;
     @Column(name = "USER_NAME")
     private String userName;
     @Column(name = "ID_BOOK")

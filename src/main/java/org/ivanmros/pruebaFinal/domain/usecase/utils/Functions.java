@@ -1,6 +1,7 @@
 package org.ivanmros.pruebaFinal.domain.usecase.utils;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Functions {
 
@@ -31,5 +32,13 @@ public class Functions {
             fee = true;
             return fee;
         }
+    }
+
+    public static Double daysFee(LocalDate endDate, LocalDate returnDate){
+        Long daysLate = ChronoUnit.DAYS.between(endDate, returnDate);
+
+        Double totalFee = daysLate * Constants.FEE_PER_DAY;
+
+        return totalFee;
     }
 }

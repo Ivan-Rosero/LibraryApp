@@ -8,7 +8,7 @@ public interface IBorrowRepository {
 
     BorrowOut createBorrow(BorrowOut borrowOut);
 
-    List<BorrowOut> findByUserId(Integer userId);
+    List<BorrowOut> findByUserId(String userId);
 
     List<BorrowOut> findAllBorrows();
 

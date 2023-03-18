@@ -44,7 +44,7 @@ public class UserEntryPoint {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getById(@PathVariable(name = "userId") Integer userId){
+    public ResponseEntity<?> getById(@PathVariable(name = "userId") String userId){
         try{
             userId.equals(userId);
             return new ResponseEntity(userUseCase.findUserById(userId), HttpStatus.OK);

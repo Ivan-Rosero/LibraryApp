@@ -16,9 +16,9 @@ import org.ivanmros.pruebaFinal.domain.model.user.UserName;
 public class UserDBO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_USER")
-    private Integer userId;
+    private String userId;
     @Column(name = "USER_NAME")
     private String userName;
 

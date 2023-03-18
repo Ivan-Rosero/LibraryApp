@@ -17,13 +17,8 @@ public class BookRepositoryAdapter implements IBookRepository {
 
     @Override
     public Book saveBook(Book book) {
-        Optional<BookDBO> bookDBO = iBookRepositoryAdapter.findById(book.getIdBook().getValue());
-        if (bookDBO.isPresent()) {
-            throw new NullPointerException("El libro con el id: " + book.getIdBook().getValue() + " ya existe.");
-        } else {
-            BookDBO bookSaved = iBookRepositoryAdapter.save(BookDBO.fromDomain(book));
-            return BookDBO.toDomain(bookSaved);
-        }
+        BookDBO bookSaved = iBookRepositoryAdapter.save(BookDBO.fromDomain(book));
+        return BookDBO.toDomain(bookSaved);
     }
 
     @Override

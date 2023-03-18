@@ -1,8 +1,7 @@
 package org.ivanmros.pruebaFinal.domain.model.book.dto;
 
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,13 +18,11 @@ import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 @Setter
 public class BookDTO {
 
-    @NotNull
     private Integer idBook;
     @NotNull
     @NotEmpty(message = "Escriba nombre del libro")
+    @Pattern(regexp = "[\\p{L}\\s]+", message = "Ingrese nombre con caracteres válidos")
     private String bookName;
-
-    @NotNull
     private boolean bookStatus;
 
     public static Book toDomain(BookDTO bookDTO){

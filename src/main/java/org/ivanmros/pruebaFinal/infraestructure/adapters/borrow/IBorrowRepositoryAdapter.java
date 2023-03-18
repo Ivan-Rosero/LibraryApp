@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IBorrowRepositoryAdapter extends JpaRepository<BorrowDBO, Integer> {
-    List<BorrowDBO> findByUserId(Integer userId);
+    List<BorrowDBO> findByUserId(String userId);
 
     BorrowDBO findBorrowByBookId(Integer bookId);
 }

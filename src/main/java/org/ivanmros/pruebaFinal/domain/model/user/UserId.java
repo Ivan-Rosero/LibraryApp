@@ -2,13 +2,13 @@ package org.ivanmros.pruebaFinal.domain.model.user;
 
 public class UserId {
 
-    private final Integer value;
+    private final String value;
 
-    public UserId(Integer value) {
+    public UserId(String value) {
         this.value = value;
     }
 
-    public Integer getValue() {
+    public String getValue() {
         return value;
     }
 }

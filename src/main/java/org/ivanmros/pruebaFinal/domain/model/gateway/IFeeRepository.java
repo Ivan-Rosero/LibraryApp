@@ -12,6 +12,6 @@ public interface IFeeRepository {
 
     List<Fee> findAllFees();
 
-    Fee findFeeByUserId(Integer userId);
+    List<Fee> findFeeByUserId(String userId);
 
 }

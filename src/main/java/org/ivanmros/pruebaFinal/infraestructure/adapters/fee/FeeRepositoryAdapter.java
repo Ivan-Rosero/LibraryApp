@@ -31,7 +31,11 @@ public class FeeRepositoryAdapter implements IFeeRepository {
     }
 
     @Override
-    public Fee findFeeByUserId(Integer userId) {
-        return null;
+    public List<Fee> findFeeByUserId(String userId) {
+        List<FeeDBO> feesOfUserList = iFeeRepositoryAdapter.findFeeByUserId(userId);
+        if(feesOfUserList.isEmpty()){
+            throw new NullPointerException("El usuario con id: " + userId + " no tiene multas actualmente.");
+        }
+        return feesOfUserList.stream().map(FeeDBO::toDomain).collect(Collectors.toList());
     }
 }

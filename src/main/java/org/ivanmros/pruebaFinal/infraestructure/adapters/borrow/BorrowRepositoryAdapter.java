@@ -22,7 +22,7 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
     }
 
     @Override
-    public List<BorrowOut> findByUserId(Integer userId) {
+    public List<BorrowOut> findByUserId(String userId) {
         List<BorrowDBO> borrowedByUserList = iBorrowRepositoryAdapter.findByUserId(userId);
         if(borrowedByUserList.isEmpty()){
             throw new NullPointerException("El usuario con id " + userId + " no ha solicitado prestamos aún.");

@@ -23,9 +23,7 @@ public class BookEntryPoint {
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody BookDTO bookDTO){
         try{
-            Book book = BookDTO.toDomain(bookDTO);
-            BookDTO bookDTO1 = BookDTO.fromDomain(bookUseCase.saveBook(book));
-            return new ResponseEntity(bookDTO1, HttpStatus.CREATED);
+            return new ResponseEntity(bookUseCase.saveBook(bookDTO), HttpStatus.CREATED);
         }catch(NullPointerException ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }catch(IllegalArgumentException ex){

@@ -119,7 +119,6 @@ public class BorrowUseCase {
         Boolean borrowedBook = book.getBookStatus().getValue();
         LocalDate today = Functions.defaultDateFunction();
         Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
-        Double doubleFee = 10000.0;
 
         if(borrow.isPresent()){
             if(borrowedBook == true) {
@@ -134,6 +133,9 @@ public class BorrowUseCase {
             iBookRepository.updateBook(book1);
 
             if(penaltyFee == true){
+                LocalDate endDate = borrow.get().getEndDate().getValue();
+                Double totalPenaltyFee = Functions.daysFee(endDate, today);
+
                 Fee fee = new Fee(
                         new FeeId(null),
                         borrow.get().getUserId(),
@@ -141,7 +143,7 @@ public class BorrowUseCase {
                         borrow.get().getBorrowId(),
                         borrow.get().getStartDate(),
                         borrow.get().getEndDate(),
-                        new FeeAmount(doubleFee)
+                        new FeeAmount(totalPenaltyFee)
                 );
                 iFeeRepository.createFee(fee);
             }
@@ -164,7 +166,7 @@ public class BorrowUseCase {
         throw new EntityExistsException("El prestamo del libro: " + book.getBookName().getValue() + " este libro no se ha realizado. Aún está en biblioteca");
     }
 
-    public ArrayList<BorrowOutDTO> findByUserId(Integer userId){
+    public ArrayList<BorrowOutDTO> findByUserId(String userId){
         List<BorrowOut> borrowedBooksByUser = this.iBorrowRepository.findByUserId(userId);
         return (ArrayList<BorrowOutDTO>) borrowedBooksByUser.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
     }

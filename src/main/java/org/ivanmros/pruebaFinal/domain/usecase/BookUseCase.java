@@ -1,6 +1,9 @@
 package org.ivanmros.pruebaFinal.domain.usecase;
 
 import org.ivanmros.pruebaFinal.domain.model.book.Book;
+import org.ivanmros.pruebaFinal.domain.model.book.BookId;
+import org.ivanmros.pruebaFinal.domain.model.book.BookName;
+import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 import org.ivanmros.pruebaFinal.domain.model.book.dto.BookDTO;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBookRepository;
 
@@ -16,8 +19,13 @@ public class BookUseCase {
         this.iBookRepository = iBookRepository;
     }
 
-    public Book saveBook(Book book){
-        return this.iBookRepository.saveBook(book);
+    public BookDTO saveBook(BookDTO bookDTO){
+        Book book = new Book(
+                new BookId(bookDTO.getIdBook()),
+                new BookName(bookDTO.getBookName()),
+                new BookStatus(true)
+        );
+        return BookDTO.fromDomain(this.iBookRepository.saveBook(book));
     }
 
     public ArrayList<BookDTO> findAllBooks(){

@@ -31,7 +31,7 @@ public class BorrowEntryPoint {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getBorrowByUserId(@PathVariable(name = "userId") Integer userId){
+    public ResponseEntity<?> getBorrowByUserId(@PathVariable(name = "userId") String userId){
         try{
             List<BorrowOutDTO> listBorrowsByUser = borrowUseCase.findByUserId(userId);
             return new ResponseEntity<>(listBorrowsByUser, HttpStatus.OK);

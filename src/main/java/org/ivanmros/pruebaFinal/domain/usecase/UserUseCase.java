@@ -24,10 +24,8 @@ public class UserUseCase {
         return (ArrayList<UserDTO>) userList.stream().map(UserDTO::fromDomain).collect(Collectors.toList());
     }
 
-    public UserDTO findUserById(Integer id){
+    public UserDTO findUserById(String id){
         User user = this.iUserRepository.findUserById(id);
         return UserDTO.fromDomain(user);
     }
-
-
 }

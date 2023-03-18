@@ -34,7 +34,7 @@ public class UserRepositoryAdapter implements IUserRepository{
     }
 
     @Override
-    public User findUserById(Integer id) {
+    public User findUserById(String id) {
         Optional<UserDBO> userDBO = iUserRepositoryAdapter.findById(id);
         if (userDBO.isEmpty()){
             throw new NullPointerException("No existe el usuario con el id: " + id);

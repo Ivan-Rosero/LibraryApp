@@ -9,6 +9,6 @@ public interface IUserRepository {
     User saveUser(User user);
     List<User> findAllUsers();
 
-    User findUserById(Integer id);
+    User findUserById(String id);
     User updateUser(User user);
 }

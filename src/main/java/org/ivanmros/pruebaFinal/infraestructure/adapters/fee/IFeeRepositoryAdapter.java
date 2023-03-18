@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IFeeRepositoryAdapter extends JpaRepository<FeeDBO, Integer> {
 
-    List<FeeDBO> findByUserId(Integer userId);
+    List<FeeDBO> findFeeByUserId(String userId);
 
 
 }

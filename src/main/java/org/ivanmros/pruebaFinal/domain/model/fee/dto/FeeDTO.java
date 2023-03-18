@@ -22,7 +22,7 @@ import java.time.LocalDate;
 public class FeeDTO {
 
     private Integer feeId;
-    private Integer userId;
+    private String userId;
     private String userName;
     private Integer borrowId;
     private LocalDate startDate;

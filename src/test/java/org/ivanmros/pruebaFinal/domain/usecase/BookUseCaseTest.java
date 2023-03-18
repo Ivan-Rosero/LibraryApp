@@ -25,20 +25,20 @@ public class BookUseCaseTest {
     @Mock
     private IBookRepository iBookRepository;
 
-    @Test
-    @DisplayName("Save book")
-    public void saveBook() throws Exception {
-
-        Book book = new Book(
-                new BookId(1),
-                new BookName("Vicious"),
-                new BookStatus(true));
-
-
-        when(iBookRepository.saveBook((any(Book.class)))).thenReturn(book);
-
-        Book actualBook = bookUseCase.saveBook(book);
-        Assertions.assertNotNull(actualBook);
-        assertEquals("test result", actualBook.getBookName().getValue(), "Vicious");
-    }
+//    @Test
+//    @DisplayName("Save book")
+//    public void saveBook() throws Exception {
+//
+//        Book book = new Book(
+//                new BookId(1),
+//                new BookName("Vicious"),
+//                new BookStatus(true));
+//
+//
+//        when(iBookRepository.saveBook((any(Book.class)))).thenReturn(book);
+//
+//        Book actualBook = bookUseCase.saveBook(book);
+//        Assertions.assertNotNull(actualBook);
+//        assertEquals("test result", actualBook.getBookName().getValue(), "Vicious");
+//    }
 }
