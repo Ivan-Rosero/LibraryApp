@@ -41,4 +41,12 @@ public class Functions {
 
         return totalFee;
     }
+
+    public static Boolean theDateIsRight(LocalDate borrowDate, LocalDate today){
+        if (borrowDate.isAfter(today)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

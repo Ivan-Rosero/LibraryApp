@@ -46,33 +46,41 @@ public class BorrowUseCase {
 
         LocalDate defaultDate = (LocalDate.parse("01/01/2020", Constants.FORMATTER));
         LocalDate endDate = Functions.endDateFunction(startDate);
+        LocalDate today = Functions.defaultDateFunction();
 
-        if(bookAvailable == true) {
-            Book book1 = new Book(
-                    book.getIdBook(),
-                    book.getBookName(),
-                    new BookStatus(false)
-            );
+        Boolean dateIsRight = Functions.theDateIsRight(startDate, today);
 
-            BorrowOut borrowOut = new BorrowOut(
-                    new BorrowId(null),
-                    user.getIdUser(),
-                    user.getUserName(),
-                    book.getIdBook(),
-                    book.getBookName(),
-                    book1.getBookStatus(),
-                    new StartDate(startDate),
-                    new EndDate(endDate),
-                    new ReturnDate(defaultDate),
-                    new BorrowStatus(true),
-                    new PenaltyFeeBoolean(false)
-            );
+        if(dateIsRight == false){
+            if(bookAvailable == true) {
+                Book book1 = new Book(
+                        book.getIdBook(),
+                        book.getBookName(),
+                        new BookStatus(false)
+                );
 
-            iBookRepository.updateBook(book1);
-            return BorrowOutDTO.fromDomain(this.iBorrowRepository.createBorrow(borrowOut));
-        }else{
-            throw new IllegalArgumentException("Este libro no está disponible.");
+                BorrowOut borrowOut = new BorrowOut(
+                        new BorrowId(null),
+                        user.getIdUser(),
+                        user.getUserName(),
+                        book.getIdBook(),
+                        book.getBookName(),
+                        book1.getBookStatus(),
+                        new StartDate(startDate),
+                        new EndDate(endDate),
+                        new ReturnDate(defaultDate),
+                        new BorrowStatus(true),
+                        new PenaltyFeeBoolean(false)
+                );
+
+                iBookRepository.updateBook(book1);
+                return BorrowOutDTO.fromDomain(this.iBorrowRepository.createBorrow(borrowOut));
+            }else{
+                throw new IllegalArgumentException("Este libro no está disponible.");
+            }
+        } else {
+            throw new IllegalArgumentException("La fecha de inicio del prestamo no puede ser posterior a " + today);
         }
+
     }
 
 //    public BorrowOut updateBorrow(Integer borrowId){
@@ -122,7 +130,7 @@ public class BorrowUseCase {
 
         if(borrow.isPresent()){
             if(borrowedBook == true) {
-                throw new IllegalArgumentException("No se puede actualizar este prestamo.");
+                throw new NullPointerException("El libro de este prestamo ya fue devuelto.");
             }
             Book book1 = new Book(
                     book.getIdBook(),
