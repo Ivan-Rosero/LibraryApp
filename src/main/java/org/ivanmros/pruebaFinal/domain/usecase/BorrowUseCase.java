@@ -202,6 +202,15 @@ public class BorrowUseCase {
         return (ArrayList<BorrowOutDTO>) totalBorrowedBooksList.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
     }
 
+    public ArrayList<BorrowOutDTO> findPendingBorrows(){
+        List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
+        List<BorrowOut> pendingBorrows = totalBorrowedBooksList.stream()
+                .filter(pb -> pb.getBorrowStatus().getValue() == true)
+                .collect(Collectors.toList());
+
+        return (ArrayList<BorrowOutDTO>) pendingBorrows.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
+    }
+
     public BorrowOutDTO findByBookId(Integer bookId){
         BorrowOut borrowOut = this.iBorrowRepository.findByBookId(bookId);
         return BorrowOutDTO.fromDomain(borrowOut);

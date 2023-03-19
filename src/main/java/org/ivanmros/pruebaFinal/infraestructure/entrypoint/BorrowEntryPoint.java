@@ -51,6 +51,16 @@ public class BorrowEntryPoint {
         }
     }
 
+    @GetMapping("/pending")
+    public ResponseEntity<?> getPendingBorrows(){
+        List<BorrowOutDTO> pendingBorrows = borrowUseCase.findPendingBorrows();
+        try{
+            return new ResponseEntity<>(pendingBorrows, HttpStatus.OK);
+        }catch (IllegalArgumentException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PutMapping
     public ResponseEntity<?> updateBorrow(@Valid @RequestBody BorrowUpdateDTO borrowUpdateDTO) throws Exception{
         try {

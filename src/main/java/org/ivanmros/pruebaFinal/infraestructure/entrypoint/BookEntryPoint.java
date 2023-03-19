@@ -41,6 +41,26 @@ public class BookEntryPoint {
         }
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<?> getAvailableBooks(){
+        List<BookDTO> books = bookUseCase.findAvailableBooks();
+        try{
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        }catch(NullPointerException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/borrowed")
+    public ResponseEntity<?> getBorrowedBooks(){
+        List<BookDTO> books = bookUseCase.findBorrowedBooks();
+        try{
+            return new ResponseEntity<>(books, HttpStatus.OK);
+        }catch(NullPointerException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/{idBook}")
     public ResponseEntity<?> getById(@PathVariable(name = "idBook") Integer idBook){
         try{
@@ -50,4 +70,8 @@ public class BookEntryPoint {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+
+
+
 }
