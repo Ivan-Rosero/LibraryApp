@@ -1,6 +1,7 @@
 package org.ivanmros.pruebaFinal.infraestructure.entrypoint;
 
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.user.User;
@@ -29,6 +30,8 @@ public class UserEntryPoint {
         }catch(NullPointerException ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }catch(IllegalArgumentException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }catch (EntityExistsException ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }

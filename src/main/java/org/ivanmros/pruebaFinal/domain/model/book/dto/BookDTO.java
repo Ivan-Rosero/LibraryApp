@@ -21,7 +21,7 @@ public class BookDTO {
     private Integer idBook;
     @NotNull
     @NotEmpty(message = "Escriba nombre del libro")
-    @Pattern(regexp = "[\\p{L}\\s]+", message = "Ingrese nombre con caracteres válidos")
+    @Pattern(regexp = "[\\p{L}\\s]+", message = "Ingrese nombre de libro con caracteres válidos")
     private String bookName;
     private boolean bookStatus;
 

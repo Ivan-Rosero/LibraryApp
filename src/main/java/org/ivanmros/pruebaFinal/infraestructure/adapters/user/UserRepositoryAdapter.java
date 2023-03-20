@@ -1,5 +1,6 @@
 package org.ivanmros.pruebaFinal.infraestructure.adapters.user;
 
+import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IUserRepository;
 import org.ivanmros.pruebaFinal.domain.model.user.User;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class UserRepositoryAdapter implements IUserRepository{
+public class UserRepositoryAdapter implements IUserRepository {
 
     private final IUserRepositoryAdapter iUserRepositoryAdapter;
 
@@ -21,7 +22,7 @@ public class UserRepositoryAdapter implements IUserRepository{
     public User saveUser(User user) {
         Optional<UserDBO> userDBO = iUserRepositoryAdapter.findById(user.getIdUser().getValue());
         if (userDBO.isPresent()) {
-            throw new NullPointerException("El usuario con el id: " + user.getIdUser().getValue() + " ya existe.");
+            throw new EntityExistsException("El usuario con el id ingresado ya existe.");
         } else {
             UserDBO userSaved = iUserRepositoryAdapter.save(UserDBO.fromDomain(user));
             return UserDBO.toDomain(userSaved);
@@ -36,20 +37,25 @@ public class UserRepositoryAdapter implements IUserRepository{
     @Override
     public User findUserById(String id) {
         Optional<UserDBO> userDBO = iUserRepositoryAdapter.findById(id);
-        if (userDBO.isEmpty()){
+        if (userDBO.isEmpty()) {
             throw new NullPointerException("No existe el usuario con el id: " + id);
-        }else{
+        } else {
             return UserDBO.toDomain(userDBO.get());
         }
     }
+//    @Override
+//    public User findUserById(String id) {
+//        Optional<UserDBO> userDBO = iUserRepositoryAdapter.findById(id);
+//        return userDBO.map(UserDBO::toDomain).orElse(null);
+//    }
 
     @Override
     public User updateUser(User user) {
         UserDBO userDBO = UserDBO.fromDomain(user);
         Optional<UserDBO> userFound = iUserRepositoryAdapter.findById(userDBO.getUserId());
-        if(userFound.isEmpty()){
+        if (userFound.isEmpty()) {
             throw new NullPointerException("No existe usuario con ese id: " + user.getIdUser().getValue());
-        }else {
+        } else {
             UserDBO userSaved = iUserRepositoryAdapter.save(userDBO);
             return UserDBO.toDomain(userSaved);
         }

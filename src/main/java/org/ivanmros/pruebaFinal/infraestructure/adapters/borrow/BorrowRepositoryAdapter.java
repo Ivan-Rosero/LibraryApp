@@ -31,7 +31,7 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
         Optional<UserDBO> userFound = iUserRepositoryAdapter.findById(userId);
 
         if(userFound.isEmpty()){
-            throw new NullPointerException("No existe el usuario con el id: " + userId);
+            throw new NullPointerException("No existe el usuario con el id ingresado");
         }else{
             if(borrowedByUserList.isEmpty()){
                 throw new NullPointerException("El usuario con id: " + userId + " no ha solicitado prestamos aún.");

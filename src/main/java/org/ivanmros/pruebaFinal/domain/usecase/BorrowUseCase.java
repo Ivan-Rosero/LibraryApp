@@ -197,6 +197,7 @@ public class BorrowUseCase {
         return (ArrayList<BorrowOutDTO>) borrowedBooksByUser.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
     }
 
+
     public ArrayList<BorrowOutDTO> findAllBorrows(){
         List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
         return (ArrayList<BorrowOutDTO>) totalBorrowedBooksList.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
