@@ -103,24 +103,6 @@ public class BookUseCaseTest {
             System.out.println("Book searched name: " + bookTest.getBookName());
         }
 
-        //        @Test
-//        @DisplayName("Book not found")
-//        void bookDoesntExist() {
-//            Book book = new Book(
-//                    new BookId(1),
-//                    new BookName("Crushed"),
-//                    new BookStatus(true));
-//
-//            when(iBookRepository.findBookById(1))
-//                    .thenReturn(null);
-//
-//            BookDTO bookTest = bookUseCase.findBookById(1);
-//
-//            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-//               bookUseCase.findBookById(1);
-//            });
-//            assertTrue(bookTest == null);
-//        }
         @Test
         @DisplayName("Get available books")
         void findAvailableBookTest() {

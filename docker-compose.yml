@@ -1,0 +1,25 @@
+version: '2.13.0'
+
+services:
+  app:
+    image: 'prueba-final:latest'
+    build:
+      context: .
+    container_name: libraryappback
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:5432/pruebaFinal
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - 8080:8080
+  db:
+    image: mysql:latest
+    container_name: libraryappdb
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DB: libraryapp
