@@ -43,21 +43,4 @@ public class UserRepositoryAdapter implements IUserRepository {
             return UserDBO.toDomain(userDBO.get());
         }
     }
-//    @Override
-//    public User findUserById(String id) {
-//        Optional<UserDBO> userDBO = iUserRepositoryAdapter.findById(id);
-//        return userDBO.map(UserDBO::toDomain).orElse(null);
-//    }
-
-    @Override
-    public User updateUser(User user) {
-        UserDBO userDBO = UserDBO.fromDomain(user);
-        Optional<UserDBO> userFound = iUserRepositoryAdapter.findById(userDBO.getUserId());
-        if (userFound.isEmpty()) {
-            throw new NullPointerException("No existe usuario con ese id: " + user.getIdUser().getValue());
-        } else {
-            UserDBO userSaved = iUserRepositoryAdapter.save(userDBO);
-            return UserDBO.toDomain(userSaved);
-        }
-    }
 }

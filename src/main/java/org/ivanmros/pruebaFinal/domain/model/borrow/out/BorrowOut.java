@@ -1,6 +1,6 @@
 package org.ivanmros.pruebaFinal.domain.model.borrow.out;
 
-import org.ivanmros.pruebaFinal.domain.model.book.BookId;
+import org.ivanmros.pruebaFinal.domain.model.book.*;
 import org.ivanmros.pruebaFinal.domain.model.book.BookName;
 import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 import org.ivanmros.pruebaFinal.domain.model.borrow.in.StartDate;
@@ -69,10 +69,6 @@ public class BorrowOut {
         return bookStatus;
     }
 
-    public void setBookStatus(BookStatus bookStatus) {
-        this.bookStatus = bookStatus;
-    }
-
     public StartDate getStartDate() {
         return startDate;
     }
@@ -85,23 +81,11 @@ public class BorrowOut {
         return returnDate;
     }
 
-    public void setReturnDate(ReturnDate returnDate) {
-        this.returnDate = returnDate;
-    }
-
     public BorrowStatus getBorrowStatus() {
         return borrowStatus;
     }
 
-    public void setBorrowStatus(BorrowStatus borrowStatus) {
-        this.borrowStatus = borrowStatus;
-    }
-
     public PenaltyFeeBoolean getPenaltyFeeBoolean() {
         return penaltyFeeBoolean;
-    }
-
-    public void setPenaltyFeeBoolean(PenaltyFeeBoolean penaltyFeeBoolean) {
-        this.penaltyFeeBoolean = penaltyFeeBoolean;
     }
 }

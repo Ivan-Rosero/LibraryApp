@@ -31,14 +31,6 @@ public class BorrowInDTO {
     @Pattern(regexp = "\\d+", message = "Ingrese solo números")
     private String userId;
 
-//    public static BorrowIn toDomain(BorrowInDTO borrowInDTO){
-//        return new BorrowIn(
-//                new BookId(borrowInDTO.getBookId()),
-//                new StartDate(LocalDate.parse(borrowInDTO.getStartDate(), Constants.FORMATTER)),
-//                new UserId(borrowInDTO.getUserId())
-//        );
-//    }
-
     public BorrowIn toDomain(){
         return new BorrowIn(
                 new BookId(this.bookId),
@@ -46,6 +38,5 @@ public class BorrowInDTO {
                 new UserId(this.userId)
         );
     }
-
 
 }

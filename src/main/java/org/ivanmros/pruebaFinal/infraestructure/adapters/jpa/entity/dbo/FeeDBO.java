@@ -41,16 +41,6 @@ public class FeeDBO {
     @Column(name = "FEE_AMOUNT")
     private Double feeAmount;
 
-//    public FeeDBO(Integer feeId, Integer userId, String userName, Integer borrowId, LocalDate startDate, LocalDate endDate, Double feeAmount) {
-//        this.feeId = feeId;
-//        this.userId = userId;
-//        this.userName = userName;
-//        this.borrowId = borrowId;
-//        this.startDate = startDate;
-//        this.endDate = endDate;
-//        this.feeAmount = feeAmount;
-//    }
-
     public Fee toDomain(){
         return new Fee(
                 new FeeId(this.getFeeId()),

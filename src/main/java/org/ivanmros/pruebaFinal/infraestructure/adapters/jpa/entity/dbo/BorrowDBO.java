@@ -44,23 +44,6 @@ public class BorrowDBO {
     @Column(name = "FEE_BOOLEAN")
     private Boolean penaltyFeeBoolean;
 
-    //Primer version
-//    public static BorrowOut toDomain(BorrowDBO borrowDBO){
-//        return new BorrowOut(
-//                new BorrowId(borrowDBO.getBorrowId()),
-//                new UserId(borrowDBO.getUserId()),
-//                new UserName(borrowDBO.getUserName()),
-//                new BookId(borrowDBO.getBookId()),
-//                new BookName(borrowDBO.getBookName()),
-//                new BookStatus(borrowDBO.getBookStatus()),
-//                new StartDate(borrowDBO.getStartDate()),
-//                new EndDate(borrowDBO.getEndDate()),
-//                new ReturnDate(borrowDBO.getReturnDate()),
-//                new BorrowStatus(borrowDBO.getBorrowStatus()),
-//                new PenaltyFeeBoolean(borrowDBO.getPenaltyFeeBoolean())
-//        );
-//    }
-
     public BorrowOut toDomain(){
         return new BorrowOut(
                 new BorrowId(this.getBorrowId()),
@@ -92,6 +75,4 @@ public class BorrowDBO {
                 borrowOut.getPenaltyFeeBoolean().getValue()
         );
     }
-
-
 }

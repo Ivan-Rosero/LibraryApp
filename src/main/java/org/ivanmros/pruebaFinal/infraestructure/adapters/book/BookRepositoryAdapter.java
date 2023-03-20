@@ -47,14 +47,4 @@ public class BookRepositoryAdapter implements IBookRepository {
             return BookDBO.toDomain(bookSaved);
         }
     }
-
-    @Override
-    public List<Book> findAvailableBooks() {
-        return iBookRepositoryAdapter.findAll().stream().map(BookDBO::toDomain).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Book> findBorrowedBooks() {
-        return iBookRepositoryAdapter.findAll().stream().map(BookDBO::toDomain).collect(Collectors.toList());
-    }
 }

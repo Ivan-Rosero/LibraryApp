@@ -6,11 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.ivanmros.pruebaFinal.domain.model.book.Book;
-import org.ivanmros.pruebaFinal.domain.model.book.BookId;
-import org.ivanmros.pruebaFinal.domain.model.book.BookName;
-import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
-
+import org.ivanmros.pruebaFinal.domain.model.book.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

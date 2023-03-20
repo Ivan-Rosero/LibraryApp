@@ -1,6 +1,5 @@
 package org.ivanmros.pruebaFinal.infraestructure.entrypoint;
 
-
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

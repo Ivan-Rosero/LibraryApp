@@ -3,7 +3,6 @@ package org.ivanmros.pruebaFinal.infraestructure.entrypoint;
 import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.fee.dto.FeeDTO;
 import org.ivanmros.pruebaFinal.domain.usecase.FeeUseCase;
-import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.FeeDBO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

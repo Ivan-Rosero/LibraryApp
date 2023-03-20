@@ -16,7 +16,6 @@ import org.ivanmros.pruebaFinal.domain.model.user.UserName;
 public class UserDBO {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_USER")
     private String userId;
     @Column(name = "USER_NAME")

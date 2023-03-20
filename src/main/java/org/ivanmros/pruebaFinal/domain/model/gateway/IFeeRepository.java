@@ -8,8 +8,6 @@ public interface IFeeRepository {
 
     Fee createFee(Fee fee);
 
-    Fee updateFee(Fee fee);
-
     List<Fee> findAllFees();
 
     List<Fee> findFeeByUserId(String userId);

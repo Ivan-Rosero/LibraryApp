@@ -1,6 +1,5 @@
 package org.ivanmros.pruebaFinal.domain.usecase;
 
-import jakarta.persistence.EntityExistsException;
 import org.ivanmros.pruebaFinal.domain.model.book.Book;
 import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 import org.ivanmros.pruebaFinal.domain.model.borrow.dto.BorrowOutDTO;
@@ -83,59 +82,6 @@ public class BorrowUseCase {
 
     }
 
-//    public BorrowOut updateBorrow(Integer borrowId){
-//        Optional<BorrowOut> borrow = Optional.ofNullable(iBorrowRepository.findById(borrowId));
-//        Book book = iBookRepository.findBookById(borrow.get().getBookId().getValue());
-//
-//        Boolean borrowedBook = book.getBookStatus().getValue();
-//        LocalDate today = Functions.defaultDateFunction();
-//        Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
-//
-//        if(borrow.isPresent()){
-//            if(borrowedBook == true) {
-//                throw new NullPointerException("El libro correspondiente a este prestamo ya fue devuelto.");
-//            }
-//            Book book1 = new Book(
-//                    book.getIdBook(),
-//                    book.getBookName(),
-//                    new BookStatus(true)
-//            );
-//
-//            iBookRepository.updateBook(book1);
-//
-//            if(penaltyFee == true){
-//                LocalDate endDate = borrow.get().getEndDate().getValue();
-//                Double totalPenaltyFee = Functions.daysFee(endDate, today);
-//
-//                Fee fee = new Fee(
-//                        new FeeId(null),
-//                        borrow.get().getUserId(),
-//                        borrow.get().getUserName(),
-//                        borrow.get().getBorrowId(),
-//                        borrow.get().getStartDate(),
-//                        borrow.get().getEndDate(),
-//                        new FeeAmount(totalPenaltyFee)
-//                );
-//                iFeeRepository.createFee(fee);
-//            }
-//
-//            return iBorrowRepository.updateBorrow(new BorrowOut(
-//                    borrow.get().getBorrowId(),
-//                    borrow.get().getUserId(),
-//                    borrow.get().getUserName(),
-//                    borrow.get().getBookId(),
-//                    borrow.get().getBookName(),
-//                    book1.getBookStatus(),
-//                    borrow.get().getStartDate(),
-//                    borrow.get().getEndDate(),
-//                    new ReturnDate(today),
-//                    new BorrowStatus(false),
-//                    new PenaltyFeeBoolean(penaltyFee)
-//            ));
-//
-//        }
-//            throw new NullPointerException("El prestamo del libro: " + book.getBookName().getValue() + " no se ha realizado. Aún está en biblioteca");
-//    }
 
     public BorrowOut updateBorrow(Integer borrowId) throws Exception {
         Optional<BorrowOut> borrow = Optional.ofNullable(iBorrowRepository.findById(borrowId));
@@ -211,11 +157,4 @@ public class BorrowUseCase {
 
         return (ArrayList<BorrowOutDTO>) pendingBorrows.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
     }
-
-    public BorrowOutDTO findByBookId(Integer bookId){
-        BorrowOut borrowOut = this.iBorrowRepository.findByBookId(bookId);
-        return BorrowOutDTO.fromDomain(borrowOut);
-    }
-
-
 }

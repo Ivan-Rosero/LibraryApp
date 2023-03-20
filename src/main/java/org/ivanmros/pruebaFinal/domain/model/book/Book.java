@@ -4,9 +4,7 @@ package org.ivanmros.pruebaFinal.domain.model.book;
 public class Book{
 
     private final BookId idBook;
-
     private final BookName bookName;
-
     private BookStatus bookStatus;
 
     public Book(BookId idBook, BookName bookName, BookStatus bookStatus) {
@@ -27,7 +25,4 @@ public class Book{
         return bookStatus;
     }
 
-    public void setBookStatus(BookStatus bookStatus) {
-        this.bookStatus = bookStatus;
-    }
 }

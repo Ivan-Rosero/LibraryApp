@@ -3,7 +3,6 @@ package org.ivanmros.pruebaFinal.infraestructure.entrypoint;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.ivanmros.pruebaFinal.domain.model.book.Book;
 import org.ivanmros.pruebaFinal.domain.model.book.dto.BookDTO;
 import org.ivanmros.pruebaFinal.domain.usecase.BookUseCase;
 import org.springframework.http.HttpStatus;

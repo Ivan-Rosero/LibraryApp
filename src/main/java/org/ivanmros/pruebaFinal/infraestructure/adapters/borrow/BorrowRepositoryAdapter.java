@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.ivanmros.pruebaFinal.domain.model.borrow.out.BorrowOut;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBorrowRepository;
 import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.BorrowDBO;
-import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.FeeDBO;
 import org.ivanmros.pruebaFinal.infraestructure.adapters.jpa.entity.dbo.UserDBO;
 import org.ivanmros.pruebaFinal.infraestructure.adapters.user.IUserRepositoryAdapter;
 import org.springframework.stereotype.Service;
@@ -38,11 +37,6 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
             }
             return borrowedByUserList.stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
         }
-
-//        if(borrowedByUserList.isEmpty()){
-//            throw new NullPointerException("El usuario con id " + userId + " no ha solicitado prestamos aún.");
-//        }
-//        return borrowedByUserList.stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
     }
 
     @Override
@@ -53,9 +47,6 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
         }
         return iBorrowRepositoryAdapter.findAll().stream().map(BorrowDBO::toDomain).collect(Collectors.toList());
     }
-
-
-    //Editar desde aquí
 
     @Override
     public BorrowOut updateBorrow(BorrowOut borrowOut) {

@@ -25,11 +25,6 @@ public class FeeRepositoryAdapter implements IFeeRepository {
     }
 
     @Override
-    public Fee updateFee(Fee fee) {
-        return null;
-    }
-
-    @Override
     public List<Fee> findAllFees() {
         return iFeeRepositoryAdapter.findAll().stream().map(FeeDBO::toDomain).collect(Collectors.toList());
     }

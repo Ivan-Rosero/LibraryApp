@@ -51,7 +51,6 @@ public class BookUseCase {
 
     public BookDTO findBookById(Integer idBook){
         Book book = this.iBookRepository.findBookById(idBook);
-
         return BookDTO.fromDomain(book);
     }
 }

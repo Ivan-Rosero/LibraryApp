@@ -30,7 +30,7 @@ public class UseCaseBeanConfig {
     }
 
     @Bean("feeService")
-    public FeeUseCase feeUseCase (IBorrowRepository iBorrowRepository, IFeeRepository iFeeRepository, IUserRepository iUserRepository){
-        return new FeeUseCase(iBorrowRepository, iFeeRepository, iUserRepository);
+    public FeeUseCase feeUseCase (IFeeRepository iFeeRepository){
+        return new FeeUseCase(iFeeRepository);
     }
 }

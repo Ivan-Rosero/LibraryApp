@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.ivanmros.pruebaFinal.domain.model.user.User;
-import org.ivanmros.pruebaFinal.domain.model.user.UserId;
-import org.ivanmros.pruebaFinal.domain.model.user.UserName;
+import org.ivanmros.pruebaFinal.domain.model.user.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
