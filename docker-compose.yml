@@ -1,25 +1,30 @@
-version: '2.13.0'
+version: '3.5'
+networks:
+  ivanmros:
 
 services:
   app:
-    image: 'prueba-final:latest'
+    image: 'openjdk'
     build:
       context: .
     container_name: libraryappback
     depends_on:
       - db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:5432/pruebaFinal
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=admin
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_JPA_SHOW_SQL=true
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://db:5432/pruebaFinal
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=admin
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SPRING_JPA_SHOW_SQL=true
     ports:
       - 8080:8080
   db:
-    image: mysql:latest
+    image: mysql
     container_name: libraryappdb
+    ports:
+      - "8085:3306"
+    volumes:
+      - ./init_portal.sql:/docker-entrypoint-initdb.d/init_portal.sql
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DB: libraryapp

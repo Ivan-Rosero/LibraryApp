@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit;
 public class Functions {
 
     public static LocalDate endDateFunction(LocalDate startDate){
-        LocalDate endDate = startDate.plusDays(7);
+        LocalDate endDate = startDate.plusDays(Constants.BORROW_DAYS);
         return endDate;
     }
 

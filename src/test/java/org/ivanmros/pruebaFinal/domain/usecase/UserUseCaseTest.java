@@ -69,8 +69,13 @@ public class UserUseCaseTest {
         when(iUserRepository.saveUser(any(User.class)))
                 .thenReturn(user);
 
+//        when(iUserRepository.findUserById("12345678"))
+//                .thenReturn(null);
+
         User userTest = userUseCase.saveUser(user);
         assertEquals(userTest, user);
+        System.out.println("User saved name: " + user.getUserName().getValue());
+        System.out.println("User saved name test: " + userTest.getUserName().getValue());
 
     }
 
@@ -107,7 +112,6 @@ public class UserUseCaseTest {
             UserDTO userTest = userUseCase.findUserById("1234567");
             System.out.println(userTest.getUserId());
             System.out.println(user.getIdUser().getValue());
-            //assertTrue(userTest.getUserId() == user.getIdUser().getValue());
             assertEquals(userTest.getUserId(), user.getIdUser().getValue());
         }
 
