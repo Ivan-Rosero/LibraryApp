@@ -36,7 +36,7 @@ public class BorrowUseCase {
         this.iFeeRepository = iFeeRepository;
     }
 
-    public BorrowOutDTO createBorrow(BorrowOutDTO borrowOutDTO){
+    public BorrowOutDTO createBorrow(BorrowOutDTO borrowOutDTO) {
         User user = iUserRepository.findUserById(borrowOutDTO.getUserId());
         Book book = iBookRepository.findBookById(borrowOutDTO.getBookId());
 
@@ -49,8 +49,8 @@ public class BorrowUseCase {
 
         Boolean dateIsRight = Functions.theDateIsRight(startDate, today);
 
-        if(dateIsRight == false){
-            if(bookAvailable.equalsIgnoreCase(Constants.BOOK_AVAILABLE)) {
+        if (dateIsRight == false) {
+            if (bookAvailable.equalsIgnoreCase(Constants.BOOK_AVAILABLE)) {
                 Book book1 = new Book(
                         book.getIdBook(),
                         book.getBookName(),
@@ -67,13 +67,13 @@ public class BorrowUseCase {
                         new StartDate(startDate),
                         new EndDate(endDate),
                         new ReturnDate(defaultDate),
-                        new BorrowStatus(true),
-                        new PenaltyFeeBoolean(false)
+                        new BorrowStatus(Constants.BORROW_CREATED),
+                        new PenaltyFeeStatus(Constants.FEE_DEFAULT)
                 );
 
                 iBookRepository.updateBook(book1);
                 return BorrowOutDTO.fromDomain(this.iBorrowRepository.createBorrow(borrowOut));
-            }else{
+            } else {
                 throw new IllegalArgumentException("Este libro no está disponible.");
             }
         } else {
@@ -89,12 +89,12 @@ public class BorrowUseCase {
 
         String borrowedBook = book.getBookStatus().getValue();
         LocalDate today = Functions.defaultDateFunction();
-        Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
+        String penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
 
-        if(!borrow.isPresent()) {
+        if (!borrow.isPresent()) {
             throw new Exception("El prestamo del libro: " + book.getBookName().getValue() + " no se ha realizado. Aún está en biblioteca");
-        }else{
-            if(borrowedBook == Constants.BOOK_AVAILABLE) {
+        } else {
+            if (borrowedBook == Constants.BOOK_AVAILABLE) {
                 throw new NullPointerException("El libro correspondiente a este prestamo ya fue devuelto.");
             }
             Book book1 = new Book(
@@ -105,7 +105,7 @@ public class BorrowUseCase {
 
             iBookRepository.updateBook(book1);
 
-            if(penaltyFee == true){
+            if (penaltyFee.equalsIgnoreCase(Constants.FEE_PENALTY)) {
                 LocalDate endDate = borrow.get().getEndDate().getValue();
                 Double totalPenaltyFee = Functions.daysFee(endDate, today);
 
@@ -119,40 +119,61 @@ public class BorrowUseCase {
                         new FeeAmount(totalPenaltyFee)
                 );
                 iFeeRepository.createFee(fee);
+                return iBorrowRepository.updateBorrow(new BorrowOut(
+                        borrow.get().getBorrowId(),
+                        borrow.get().getUserId(),
+                        borrow.get().getUserName(),
+                        borrow.get().getBookId(),
+                        borrow.get().getBookName(),
+                        book1.getBookStatus(),
+                        borrow.get().getStartDate(),
+                        borrow.get().getEndDate(),
+                        new ReturnDate(today),
+                        new BorrowStatus(Constants.BORROW_FEE),
+                        new PenaltyFeeStatus(penaltyFee)));
+            } else {
+
+                return iBorrowRepository.updateBorrow(new BorrowOut(
+                        borrow.get().getBorrowId(),
+                        borrow.get().getUserId(),
+                        borrow.get().getUserName(),
+                        borrow.get().getBookId(),
+                        borrow.get().getBookName(),
+                        book1.getBookStatus(),
+                        borrow.get().getStartDate(),
+                        borrow.get().getEndDate(),
+                        new ReturnDate(today),
+                        new BorrowStatus(Constants.BORROW_RETURNED),
+                        new PenaltyFeeStatus(penaltyFee)
+                ));
             }
-
-            return iBorrowRepository.updateBorrow(new BorrowOut(
-                    borrow.get().getBorrowId(),
-                    borrow.get().getUserId(),
-                    borrow.get().getUserName(),
-                    borrow.get().getBookId(),
-                    borrow.get().getBookName(),
-                    book1.getBookStatus(),
-                    borrow.get().getStartDate(),
-                    borrow.get().getEndDate(),
-                    new ReturnDate(today),
-                    new BorrowStatus(false),
-                    new PenaltyFeeBoolean(penaltyFee)
-            ));
-
         }
     }
 
-    public ArrayList<BorrowOutDTO> findByUserId(String userId){
+    public ArrayList<BorrowOutDTO> findByUserId(String userId) {
         List<BorrowOut> borrowedBooksByUser = this.iBorrowRepository.findByUserId(userId);
         return (ArrayList<BorrowOutDTO>) borrowedBooksByUser.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
     }
 
 
-    public ArrayList<BorrowOutDTO> findAllBorrows(){
+    public ArrayList<BorrowOutDTO> findAllBorrows() {
         List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
         return (ArrayList<BorrowOutDTO>) totalBorrowedBooksList.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
     }
 
-    public ArrayList<BorrowOutDTO> findPendingBorrows(){
+    public ArrayList<BorrowOutDTO> findPendingBorrows() {
         List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
         List<BorrowOut> pendingBorrows = totalBorrowedBooksList.stream()
-                .filter(pb -> pb.getBorrowStatus().getValue() == true)
+                .filter(pb -> pb.getBorrowStatus().getValue().equalsIgnoreCase(Constants.BORROW_CREATED))
+                .collect(Collectors.toList());
+
+        return (ArrayList<BorrowOutDTO>) pendingBorrows.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());
+    }
+
+    public ArrayList<BorrowOutDTO> findExpiredBorrows() {
+        List<BorrowOut> totalBorrowedBooksList = this.iBorrowRepository.findAllBorrows();
+        List<BorrowOut> pendingBorrows = totalBorrowedBooksList.stream()
+                .filter(pb -> pb.getBorrowStatus().getValue().equalsIgnoreCase(Constants.BORROW_FEE))
                 .collect(Collectors.toList());
 
         return (ArrayList<BorrowOutDTO>) pendingBorrows.stream().map(BorrowOutDTO::fromDomain).collect(Collectors.toList());

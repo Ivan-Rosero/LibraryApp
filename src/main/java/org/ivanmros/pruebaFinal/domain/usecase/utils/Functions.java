@@ -15,13 +15,13 @@ public class Functions {
         return returnDate;
     }
 
-    public static Boolean penaltyFee(LocalDate endDate, LocalDate returnDate){
-        Boolean fee;
+    public static String penaltyFee(LocalDate endDate, LocalDate returnDate){
+        String fee;
         if(returnDate.isBefore(endDate)){
-            fee = false;
+            fee = Constants.FEE_DEFAULT;
             return fee;
         }else{
-            fee = true;
+            fee = Constants.FEE_PENALTY;
             return fee;
         }
     }

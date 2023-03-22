@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface IBorrowRepositoryAdapter extends JpaRepository<BorrowDBO, Integer> {
     List<BorrowDBO> findByUserId(String userId);
-
-    BorrowDBO findBorrowByBookId(Integer bookId);
 }

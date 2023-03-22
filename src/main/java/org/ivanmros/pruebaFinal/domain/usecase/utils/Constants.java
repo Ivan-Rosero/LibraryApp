@@ -12,4 +12,14 @@ public class Constants {
 
     public static final String BOOK_AVAILABLE = "Disponible";
     public static final String BOOK_NOT_AVAILABLE = "Prestado";
+
+    public static final String BORROW_CREATED = "Vigente";
+
+    public static final String BORROW_RETURNED = "Devuelto";
+
+    public static final String BORROW_FEE = "Vencido";
+
+    public static final String FEE_PENALTY = "Tiene multa";
+    public static final String FEE_DEFAULT = "Sin Multas";
+
 }

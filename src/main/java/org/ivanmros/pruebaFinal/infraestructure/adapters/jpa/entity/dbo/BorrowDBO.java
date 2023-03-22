@@ -40,9 +40,9 @@ public class BorrowDBO {
     @Column(name = "RETURN_DATE")
     private LocalDate returnDate;
     @Column(name = "BORROW_STATUS")
-    private Boolean borrowStatus;
+    private String borrowStatus;
     @Column(name = "FEE_BOOLEAN")
-    private Boolean penaltyFeeBoolean;
+    private String penaltyFeeBoolean;
 
     public BorrowOut toDomain(){
         return new BorrowOut(
@@ -56,7 +56,7 @@ public class BorrowDBO {
                 new EndDate(this.getEndDate()),
                 new ReturnDate(this.getReturnDate()),
                 new BorrowStatus(this.getBorrowStatus()),
-                new PenaltyFeeBoolean(this.getPenaltyFeeBoolean())
+                new PenaltyFeeStatus(this.getPenaltyFeeBoolean())
         );
     }
 

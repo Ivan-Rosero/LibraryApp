@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 public class BorrowUpdateDTO {
 
     @NotNull
-    //@Pattern(regexp = "\\d+", message = "Ingrese solo números")
     private Integer borrowId;
 
 }

@@ -2,15 +2,15 @@ package org.ivanmros.pruebaFinal.domain.model.borrow.out;
 
 import org.ivanmros.pruebaFinal.domain.usecase.utils.Constants;
 
-public class BorrowStatus {
+public class PenaltyFeeStatus {
 
     private String value;
 
-    public BorrowStatus(String value) {
+    public PenaltyFeeStatus(String value) {
         if(value != null){
             this.value = value;
         }else{
-            value = Constants.BORROW_CREATED;
+            value = Constants.FEE_DEFAULT;
             this.value = value;
         }
     }

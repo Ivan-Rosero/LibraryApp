@@ -59,12 +59,6 @@ public class BorrowRepositoryAdapter implements IBorrowRepository {
     }
 
     @Override
-    public BorrowOut findByBookId(Integer bookId) {
-        Optional<BorrowDBO> obj = Optional.ofNullable(iBorrowRepositoryAdapter.findBorrowByBookId(bookId));
-        return obj.map(BorrowDBO::toDomain).orElse(null);
-    }
-
-    @Override
     public BorrowOut findById(Integer borrowId) {
         Optional<BorrowDBO> obj = iBorrowRepositoryAdapter.findById(borrowId);
         return obj.map(BorrowDBO::toDomain).orElse(null);

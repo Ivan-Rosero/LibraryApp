@@ -14,7 +14,5 @@ public interface IBorrowRepository {
 
     BorrowOut updateBorrow(BorrowOut borrowOut);
 
-    BorrowOut findByBookId(Integer bookId);
-
     BorrowOut findById(Integer borrowId);
 }

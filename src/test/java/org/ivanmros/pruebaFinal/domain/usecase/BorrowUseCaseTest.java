@@ -1,6 +1,5 @@
 package org.ivanmros.pruebaFinal.domain.usecase;
 
-import jakarta.persistence.EntityExistsException;
 import org.ivanmros.pruebaFinal.domain.model.book.Book;
 import org.ivanmros.pruebaFinal.domain.model.book.BookId;
 import org.ivanmros.pruebaFinal.domain.model.book.BookName;
@@ -15,7 +14,6 @@ import org.ivanmros.pruebaFinal.domain.model.gateway.IUserRepository;
 import org.ivanmros.pruebaFinal.domain.model.user.User;
 import org.ivanmros.pruebaFinal.domain.model.user.UserId;
 import org.ivanmros.pruebaFinal.domain.model.user.UserName;
-import org.ivanmros.pruebaFinal.domain.usecase.utils.Constants;
 import org.ivanmros.pruebaFinal.domain.usecase.utils.Functions;
 import org.ivanmros.pruebaFinal.infraestructure.adapters.borrow.BorrowRepositoryAdapter;
 import org.junit.jupiter.api.*;
@@ -95,7 +93,7 @@ public class BorrowUseCaseTest {
                 new EndDate(Functions.endDateFunction(LocalDate.of(2023,03,19))),
                 new ReturnDate(LocalDate.of(2020,01,01)),
                 new BorrowStatus(true),
-                new PenaltyFeeBoolean(false)
+                new PenaltyFeeStatus(false)
         );
 
         BorrowInDTO borrowInDTO = new BorrowInDTO(

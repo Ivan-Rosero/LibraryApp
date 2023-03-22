@@ -31,8 +31,8 @@ public class BorrowOutDTO {
     private String startDate;
     private String endDate;
     private String returnDate;
-    private Boolean borrowStatus;
-    private Boolean penaltyFeeBoolean;
+    private String borrowStatus;
+    private String penaltyFeeBoolean;
 
     public static BorrowOutDTO fromDomain(BorrowOut borrowOut){
         return new BorrowOutDTO(borrowOut.getBorrowId().getValue(),

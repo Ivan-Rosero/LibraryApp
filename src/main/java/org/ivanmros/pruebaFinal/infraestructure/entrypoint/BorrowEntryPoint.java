@@ -60,6 +60,16 @@ public class BorrowEntryPoint {
         }
     }
 
+    @GetMapping("/expired")
+    public ResponseEntity<?> getExpiredBorrows(){
+        List<BorrowOutDTO> expiredBorrows = borrowUseCase.findExpiredBorrows();
+        try{
+            return new ResponseEntity<>(expiredBorrows, HttpStatus.OK);
+        }catch (IllegalArgumentException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PutMapping
     public ResponseEntity<?> updateBorrow(@Valid @RequestBody BorrowUpdateDTO borrowUpdateDTO) throws Exception{
         try {
