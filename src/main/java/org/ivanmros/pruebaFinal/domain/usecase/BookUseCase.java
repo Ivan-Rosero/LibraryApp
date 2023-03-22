@@ -37,7 +37,7 @@ public class BookUseCase {
     public ArrayList<BookDTO> findAvailableBooks(){
         List<Book> bookList = this.iBookRepository.findAllBooks();
         List<Book> availableBooks = bookList.stream()
-                .filter(b -> b.getBookStatus().getValue() == Constants.BOOK_AVAILABLE)
+                .filter(b -> b.getBookStatus().getValue().equalsIgnoreCase(Constants.BOOK_AVAILABLE))
                 .collect(Collectors.toList());
         return (ArrayList<BookDTO>) availableBooks.stream().map(BookDTO::fromDomain).collect(Collectors.toList());
     }
@@ -45,7 +45,7 @@ public class BookUseCase {
     public ArrayList<BookDTO> findBorrowedBooks(){
         List<Book> bookList = this.iBookRepository.findAllBooks();
         List<Book> borrowedBooks = bookList.stream()
-                .filter(b -> b.getBookStatus().getValue() == Constants.BOOK_NOT_AVAILABLE)
+                .filter(b -> b.getBookStatus().getValue().equalsIgnoreCase(Constants.BOOK_NOT_AVAILABLE))
                 .collect(Collectors.toList());
         return (ArrayList<BookDTO>) borrowedBooks.stream().map(BookDTO::fromDomain).collect(Collectors.toList());
     }
