@@ -25,7 +25,7 @@ public class BorrowOutDTO {
     @NotNull
     private Integer bookId;
     private String bookName;
-    private Boolean bookStatus;
+    private String bookStatus;
     @NotNull(message = "Este campo no debe estar vacío")
     @Pattern(regexp = "^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)$", message = "La fecha no cumple con el patrón establecido dd/mm/aaaa")
     private String startDate;

@@ -19,13 +19,13 @@ public class BookDTO {
     @NotEmpty(message = "Escriba nombre del libro")
     @Pattern(regexp = "[\\p{L}\\s]+", message = "Ingrese nombre de libro con caracteres válidos")
     private String bookName;
-    private boolean bookStatus;
+    private String bookStatus;
 
     public static Book toDomain(BookDTO bookDTO){
         return new Book(
                 new BookId(bookDTO.getIdBook()),
                 new BookName(bookDTO.getBookName()),
-                new BookStatus(bookDTO.isBookStatus())
+                new BookStatus(bookDTO.getBookStatus())
         );
     }
 

@@ -41,7 +41,7 @@ public class BorrowUseCase {
         Book book = iBookRepository.findBookById(borrowOutDTO.getBookId());
 
         LocalDate startDate = (LocalDate.parse(borrowOutDTO.getStartDate(), Constants.FORMATTER));
-        Boolean bookAvailable = book.getBookStatus().getValue();
+        String bookAvailable = book.getBookStatus().getValue();
 
         LocalDate defaultDate = (LocalDate.parse("01/01/2020", Constants.FORMATTER));
         LocalDate endDate = Functions.endDateFunction(startDate);
@@ -50,11 +50,11 @@ public class BorrowUseCase {
         Boolean dateIsRight = Functions.theDateIsRight(startDate, today);
 
         if(dateIsRight == false){
-            if(bookAvailable == true) {
+            if(bookAvailable.equalsIgnoreCase(Constants.BOOK_AVAILABLE)) {
                 Book book1 = new Book(
                         book.getIdBook(),
                         book.getBookName(),
-                        new BookStatus(false)
+                        new BookStatus(Constants.BOOK_NOT_AVAILABLE)
                 );
 
                 BorrowOut borrowOut = new BorrowOut(
@@ -87,20 +87,20 @@ public class BorrowUseCase {
         Optional<BorrowOut> borrow = Optional.ofNullable(iBorrowRepository.findById(borrowId));
         Book book = iBookRepository.findBookById(borrow.get().getBookId().getValue());
 
-        Boolean borrowedBook = book.getBookStatus().getValue();
+        String borrowedBook = book.getBookStatus().getValue();
         LocalDate today = Functions.defaultDateFunction();
         Boolean penaltyFee = Functions.penaltyFee(borrow.get().getEndDate().getValue(), today);
 
         if(!borrow.isPresent()) {
             throw new Exception("El prestamo del libro: " + book.getBookName().getValue() + " no se ha realizado. Aún está en biblioteca");
         }else{
-            if(borrowedBook == true) {
+            if(borrowedBook == Constants.BOOK_AVAILABLE) {
                 throw new NullPointerException("El libro correspondiente a este prestamo ya fue devuelto.");
             }
             Book book1 = new Book(
                     book.getIdBook(),
                     book.getBookName(),
-                    new BookStatus(true)
+                    new BookStatus(Constants.BOOK_AVAILABLE)
             );
 
             iBookRepository.updateBook(book1);

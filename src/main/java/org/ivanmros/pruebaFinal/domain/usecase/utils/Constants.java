@@ -9,4 +9,7 @@ public class Constants {
     public static final double FEE_PER_DAY = 1000.0;
 
     public static final int BORROW_DAYS = 7;
+
+    public static final String BOOK_AVAILABLE = "Disponible";
+    public static final String BOOK_NOT_AVAILABLE = "Prestado";
 }

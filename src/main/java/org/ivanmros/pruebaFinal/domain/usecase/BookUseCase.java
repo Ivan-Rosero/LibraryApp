@@ -6,6 +6,7 @@ import org.ivanmros.pruebaFinal.domain.model.book.BookName;
 import org.ivanmros.pruebaFinal.domain.model.book.BookStatus;
 import org.ivanmros.pruebaFinal.domain.model.book.dto.BookDTO;
 import org.ivanmros.pruebaFinal.domain.model.gateway.IBookRepository;
+import org.ivanmros.pruebaFinal.domain.usecase.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class BookUseCase {
         Book book = new Book(
                 new BookId(bookDTO.getIdBook()),
                 new BookName(bookDTO.getBookName()),
-                new BookStatus(true)
+                new BookStatus(Constants.BOOK_AVAILABLE)
         );
         return BookDTO.fromDomain(this.iBookRepository.saveBook(book));
     }
@@ -36,7 +37,7 @@ public class BookUseCase {
     public ArrayList<BookDTO> findAvailableBooks(){
         List<Book> bookList = this.iBookRepository.findAllBooks();
         List<Book> availableBooks = bookList.stream()
-                .filter(b -> b.getBookStatus().getValue() == true)
+                .filter(b -> b.getBookStatus().getValue() == Constants.BOOK_AVAILABLE)
                 .collect(Collectors.toList());
         return (ArrayList<BookDTO>) availableBooks.stream().map(BookDTO::fromDomain).collect(Collectors.toList());
     }
@@ -44,7 +45,7 @@ public class BookUseCase {
     public ArrayList<BookDTO> findBorrowedBooks(){
         List<Book> bookList = this.iBookRepository.findAllBooks();
         List<Book> borrowedBooks = bookList.stream()
-                .filter(b -> b.getBookStatus().getValue() == false)
+                .filter(b -> b.getBookStatus().getValue() == Constants.BOOK_NOT_AVAILABLE)
                 .collect(Collectors.toList());
         return (ArrayList<BookDTO>) borrowedBooks.stream().map(BookDTO::fromDomain).collect(Collectors.toList());
     }

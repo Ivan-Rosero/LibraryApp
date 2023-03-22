@@ -32,7 +32,7 @@ public class BorrowDBO {
     @Column(name = "BOOK_NAME")
     private String bookName;
     @Column(name = "BOOK_STATUS")
-    private Boolean bookStatus;
+    private String bookStatus;
     @Column(name = "START_DATE")
     private LocalDate startDate;
     @Column(name = "END_DATE")

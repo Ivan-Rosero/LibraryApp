@@ -24,7 +24,7 @@ public class BookDBO {
     @Column(name = "BOOK_NAME")
     private String bookName;
     @Column(name = "BOOK_STATUS")
-    private Boolean bookStatus;
+    private String bookStatus;
 
     public static Book toDomain(BookDBO bookDBO){
         return new Book(
